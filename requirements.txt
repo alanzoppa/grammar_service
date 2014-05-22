@@ -1,0 +1,16 @@
+Flask==0.10.1
+Jinja2==2.7.2
+MarkupSafe==0.23
+PyYAML==3.11
+Pygments==1.6
+Werkzeug==0.9.4
+hyp==0.3.1
+inflection==0.2.0
+itsdangerous==0.24
+marshmallow==0.5.2
+nltk==2.0.4
+pudb==2014.1
+pyringe==1.0.2
+schematics==0.9-4
+urwid==1.2.1
+wsgiref==0.1.2
