@@ -2,11 +2,11 @@
 import unittest
 from server import app
 import json
-from pudb import set_trace
+from ipdb import set_trace
 from document import Document
 from text import MR_LEE
 import nltk
-#import tempfile
+import tempfile
 
 class FlaskrTestCase(unittest.TestCase):
 
@@ -19,24 +19,12 @@ class FlaskrTestCase(unittest.TestCase):
     def api_post(self, path, data):
         if data.__class__.__name__ != 'str':
             data = json.dumps(data)
-        return self.app.post(path, data, content_type='application/vnd.api+json')
+        return self.app.post(path, data=data, content_type='application/vnd.api+json')
 
-    #def tearDown(self):
-        #os.close(self.db_fd)
-        #os.unlink(flaskr.app.config['DATABASE'])
-
-#class TestNothing(FlaskrTestCase):
-    #def test_nothing(self):
-        #r = self.app.get('/')
-        #assert r.status_code == 200
-
-    #def test_nothing_at_all(self):
-        #r = self.app.get('/')
-        #assert r.status_code == 200
 
 class TestAPIPrimitives(FlaskrTestCase):
     def test_response_format(self):
-        res = self.app.post(path='/', content_type='application/vnd.api+json')
+        res = self.app.post(path='/', data=json.dumps({'documents': ['bar']}), content_type='application/vnd.api+json')
         assert res.content_type == 'application/vnd.api+json'
 
     def test_bad_format(self):
@@ -50,7 +38,7 @@ class TestAPIPrimitives(FlaskrTestCase):
         assert res.status_code == 405
 
     def test_api_post_helper(self):
-        res = self.api_post('/', {})
+        res = self.api_post('/', {'documents': ['bar']})
         assert res.status_code == 200
         assert res.content_type == 'application/vnd.api+json'
 
@@ -130,15 +118,14 @@ class TestDocumentBasics(unittest.TestCase):
 
         assert word_count == 765
 
-
-    #def test_words_are_tokenized_properly(self):
-        #pgs = self.doc.tokenized_sentences_by_paragraph()
-        #print pgs
-
-
-#class TestParagraphDivision(FlaskrTestCase):
-    #def test_paragraph_split(self):
-        #pass
+class TestBasicAPI(FlaskrTestCase):
+    def test_posting_valid_document(self):
+        res = self.api_post('/', {'documents': [MR_LEE]})
+        data = json.loads(res.data)
+        new_doc = Document(MR_LEE).tagged_document()
+        response_doc = data['documents'][0]
+        assert len(response_doc) == 18
+        assert json.dumps(new_doc) == json.dumps(response_doc)
 
 
 
