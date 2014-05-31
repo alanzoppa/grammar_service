@@ -121,10 +121,14 @@ class TestDocumentBasics(unittest.TestCase):
 
     def test_paragraphs_are_tagged(self):
         tokenized_document = self.doc.tagged_document()
+        word_count = 0
         for paragraph in tokenized_document:
             for sentence in paragraph:
                 for word in sentence:
+                    word_count += 1
                     assert len(word) == 2
+
+        assert word_count == 765
 
 
     #def test_words_are_tokenized_properly(self):
