@@ -14,3 +14,4 @@ pyringe==1.0.2
 schematics==0.9-4
 urwid==1.2.1
 wsgiref==0.1.2
+numpy==1.8.1

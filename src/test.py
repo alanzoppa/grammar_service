@@ -5,6 +5,7 @@ import json
 from pudb import set_trace
 from document import Document
 from text import MR_LEE
+import nltk
 #import tempfile
 
 class FlaskrTestCase(unittest.TestCase):
@@ -70,6 +71,65 @@ class TestDocumentBasics(unittest.TestCase):
         pgs = self.doc.paragraphs()
         last_pg = pgs[len(pgs)-1]
         assert last_pg != ''
+
+    def test_sentences_by_paragraph_are_arrays(self):
+        pgs = self.doc.sentences_by_paragraph()
+        assert len(pgs) == 18
+
+    def test_sentences_by_paragraph_are_arrays_of_arrays(self):
+        pgs = self.doc.sentences_by_paragraph()
+        for pg in pgs:
+            assert pg.__class__ == [].__class__
+            assert len(pg) > 0
+    
+    def test_paragraphs_are_word_tokenized(self):
+        paragraph = self.doc.sentences_by_paragraph()[-1]
+        tokenized_paragraph = Document.word_tokenize_paragraph(paragraph)
+        assert len(tokenized_paragraph) == 4
+        for sentence in tokenized_paragraph:
+            assert sentence.__class__ == [].__class__
+            assert len(sentence) > 0
+
+    def test_tokenized_sentences_by_paragraph(self):
+        tsbp = self.doc.tokenized_sentences_by_paragraph()
+        assert len(tsbp) == 18
+        iterable_to_len = lambda x: len(x)
+        sentences_per_paragraph = map(iterable_to_len, tsbp)
+        assert sentences_per_paragraph == [1, 1, 3, 1, 4, 5, 3, 4, 2, 1, 1, 6, 2, 2, 6, 6, 2, 4]
+        known_sentence_lengths = [
+            [22],
+            [11],
+            [5, 9, 21],
+            [23],
+            [10, 10, 8, 18],
+            [6, 6, 15, 7, 6],
+            [8, 13, 9],
+            [6, 18, 20, 19],
+            [11, 19],
+            [12],
+            [23],
+            [12, 7, 15, 7, 6, 5],
+            [6, 22],
+            [37, 22],
+            [10, 36, 8, 18, 8, 13],
+            [10, 6, 3, 8, 9, 18],
+            [26, 66],
+            [26, 17, 5, 4]
+            ]
+        words_per_sentence = [map(iterable_to_len, sentence) for sentence in tsbp]
+        assert words_per_sentence == known_sentence_lengths
+
+    def test_paragraphs_are_tagged(self):
+        tokenized_document = self.doc.tagged_document()
+        for paragraph in tokenized_document:
+            for sentence in paragraph:
+                for word in sentence:
+                    assert len(word) == 2
+
+
+    #def test_words_are_tokenized_properly(self):
+        #pgs = self.doc.tokenized_sentences_by_paragraph()
+        #print pgs
 
 
 #class TestParagraphDivision(FlaskrTestCase):
