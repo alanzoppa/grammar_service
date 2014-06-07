@@ -19,19 +19,13 @@ class FlaskrTestCase(unittest.TestCase):
     def api_post(self, path, data):
         if data.__class__.__name__ != 'str':
             data = json.dumps(data)
-        return self.app.post(path, data=data, content_type='application/vnd.api+json')
+        return self.app.post(path, data=data, content_type='application/json')
 
 
 class TestAPIPrimitives(FlaskrTestCase):
     def test_response_format(self):
-        res = self.app.post(path='/', data=json.dumps({'documents': ['bar']}), content_type='application/vnd.api+json')
-        assert res.content_type == 'application/vnd.api+json'
-
-    def test_bad_format(self):
-        res = self.app.post(path='/')
-        err = json.loads(res.data)
-        assert err['error'] == 'use application/vnd.api+json'
-        assert res.content_type == 'application/vnd.api+json'
+        res = self.app.post(path='/', data=json.dumps({'documents': ['bar']}), content_type='application/json')
+        assert res.content_type == 'application/json'
 
     def test_bad_request(self):
         res = self.app.get(path='/')
@@ -40,7 +34,7 @@ class TestAPIPrimitives(FlaskrTestCase):
     def test_api_post_helper(self):
         res = self.api_post('/', {'documents': ['bar']})
         assert res.status_code == 200
-        assert res.content_type == 'application/vnd.api+json'
+        assert res.content_type == 'application/json'
 
 class TestDocumentBasics(unittest.TestCase):
     def setUp(self):

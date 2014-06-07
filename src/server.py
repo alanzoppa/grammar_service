@@ -15,15 +15,12 @@ class JSONParseException(InvalidUsage):
 @app.errorhandler(InvalidUsage)
 def handle_invalid_usage(error):
     response = jsonify({'error': error.message})
-    response.content_type = 'application/vnd.api+json'
     response.status_code = error.status_code
     return response
 
 
 @app.route('/', methods=['POST'])
 def hello_world():
-    if request.content_type != 'application/vnd.api+json':
-        raise InvalidUsage("use application/vnd.api+json")
     if request.method == "POST":
         try:
             data = json.loads(request.data)
@@ -32,8 +29,7 @@ def hello_world():
             raise JSONParseException(str(err), 500)
         except Exception as err:
             raise InvalidUsage(str(err), 500)
-        return Response(json.dumps({'documents': documents}), mimetype='application/vnd.api+json')
-    #document = Document()
+        return jsonify({'documents': documents})
 
 if __name__ == '__main__':
     app.run(debug=True)
