@@ -29,7 +29,9 @@ def hello_world():
             raise JSONParseException(str(err), 500)
         except Exception as err:
             raise InvalidUsage(str(err), 500)
-        return jsonify({'documents': documents, 'original': data['documents']})
+        res = jsonify({'documents': documents, 'original': data['documents']})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
 
 if __name__ == '__main__':
     app.run(debug=True)
