@@ -121,6 +121,12 @@ class TestBasicAPI(FlaskrTestCase):
         assert len(response_doc) == 18
         assert json.dumps(new_doc) == json.dumps(response_doc)
 
+    def test_original_in_response(self):
+        res = self.api_post('/', {'documents': [MR_LEE]})
+        data = json.loads(res.data)
+        new_doc = Document(MR_LEE).tagged_document()
+        response_doc = data['original'][0]
+        assert response_doc == MR_LEE
 
 
 if __name__ == '__main__':

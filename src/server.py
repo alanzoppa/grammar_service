@@ -23,13 +23,13 @@ def handle_invalid_usage(error):
 def hello_world():
     if request.method == "POST":
         try:
-            data = json.loads(request.data)
+            data = request.get_json()
             documents = [Document(document).tagged_document() for document in data['documents']]
         except ValueError as err:
             raise JSONParseException(str(err), 500)
         except Exception as err:
             raise InvalidUsage(str(err), 500)
-        return jsonify({'documents': documents})
+        return jsonify({'documents': documents, 'original': data['documents']})
 
 if __name__ == '__main__':
     app.run(debug=True)
