@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, jsonify, json
+from flask import Flask, request, Response, jsonify, json, render_template
 app = Flask(__name__)
 from ipdb import set_trace
 from document import Document
@@ -19,7 +19,7 @@ def handle_invalid_usage(error):
     return response
 
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['POST', 'GET'])
 def hello_world():
     if request.method == "POST":
         try:
@@ -29,9 +29,10 @@ def hello_world():
             raise JSONParseException(str(err), 500)
         except Exception as err:
             raise InvalidUsage(str(err), 500)
-        res = jsonify({'documents': documents, 'original': data['documents']})
-        res.headers['Access-Control-Allow-Origin'] = '*'
+        res = Response(json.dumps({'documents': documents, 'original': data['documents']}), mimetype='application/json')
         return res
+    else:
+        return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

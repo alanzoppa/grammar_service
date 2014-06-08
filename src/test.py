@@ -128,6 +128,10 @@ class TestBasicAPI(FlaskrTestCase):
         response_doc = data['original'][0]
         assert response_doc == MR_LEE
 
+    def test_cors_header(self):
+        res = self.api_post('/', {'documents': [MR_LEE]})
+        set_trace()
+
 
 if __name__ == '__main__':
     unittest.main()
