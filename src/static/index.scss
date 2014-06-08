@@ -1,0 +1,152 @@
+$black: #000;
+$grayDarker: #222;
+$grayDark: #333;
+$gray: #666;
+$grayLight: #999;
+$grayLighter: #eee;
+$white: #fff;
+$offWhite: #fefefe;
+$blueLight: #049cdb + #ddd;
+$blue: #049cdb;
+$blueDark: #0064cd;
+$green: #46a546;
+$greenLight: #46a546 + #222;
+$greenLighter: #46a546 + #446;
+$greenDark: $green - #222;
+$red: #9d261d;
+$redDark: $red - #222;
+$redLight: $red + #222;
+$redLighter: $red + #666;
+$redFaint: $red + #999;
+$yellowDark: #ffc40d - #444;
+$yellow: #ffc40d;
+$yellowLight: #ffc40d + #222;
+$yellowFaint: #ffc40d + #999;
+$orange: #f89406;
+$pink: #c3325f;
+$purple: #7a43b6;
+
+body {
+  background: #ddd;
+}
+
+.noun-type {
+  color: $blue;
+}
+
+
+.verb-type {
+  color: $green;
+}
+
+.importance-0 {
+  font-weight: bold;
+  font-size: 1.25em;
+}
+
+
+.importance-1 {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+
+.importance-2 {
+  font-weight: bold;
+  font-size: 1.15em;
+}
+
+
+.importance-3 {
+  font-size: 1.1em;
+}
+
+
+.importance-4 {
+  font-size: 1.05em;
+}
+.importance-5 {
+}
+.importance-6 {
+}
+.importance-7 {
+}
+.importance-8 {
+}
+.importance-9 {
+}
+
+
+
+.coordinating-conjunction {
+}
+.cardinal-number {
+}
+.determiner {
+}
+.existential-there {
+}
+.foreign-word {
+}
+.preposition-or-subordinating-conjunction {
+}
+.adjective {
+}
+.adjective-or-comparative {
+}
+.adjective-or-superlative {
+}
+.list-item-marker {
+}
+.modal {
+}
+.noun-or-singular-or-mass {
+}
+.noun-orplural {
+}
+.proper-noun-or-singular {
+}
+.proper-noun-or-plural {
+}
+.predeterminer {
+}
+.possessive-ending {
+}
+.personal-pronoun {
+}
+.possessive-pronoun {
+}
+.adverb {
+}
+.adverb-or-comparative {
+}
+.adverb-or-superlative {
+}
+.particle {
+}
+.symbol {
+}
+.to {
+}
+.interjection {
+}
+.verb-or-base-form {
+}
+.verb-or-past-tense {
+}
+.verb-or-gerund-or-present-participle {
+}
+.verb-or-past-participle {
+}
+.verb-or-non-3rd-person-singular-present {
+}
+.verb-or-3rd-person-singular-present {
+}
+.wh-determiner {
+}
+.wh-pronoun {
+}
+.possessive-wh-pronoun {
+}
+.wh-adverb {
+}

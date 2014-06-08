@@ -22,23 +22,28 @@
     },
     'FW': {
       description: "Foreign word",
-      "class": "foreign-word"
+      "class": "foreign-word",
+      type: 'noun-type'
     },
     'IN': {
       description: "Preposition or subordinating conjunction",
-      "class": "preposition-or-subordinating-conjunction"
+      "class": "preposition-or-subordinating-conjunction",
+      type: 'minor-type'
     },
     'JJ': {
       description: "Adjective",
-      "class": "adjective"
+      "class": "adjective",
+      type: 'adj-type'
     },
     'JJR': {
       description: "Adjective, comparative",
-      "class": "adjective-or-comparative"
+      "class": "adjective-or-comparative",
+      type: 'adj-type'
     },
     'JJS': {
       description: "Adjective, superlative",
-      "class": "adjective-or-superlative"
+      "class": "adjective-or-superlative",
+      type: 'adj-type'
     },
     'LS': {
       description: "List item marker",
@@ -50,51 +55,69 @@
     },
     'NN': {
       description: "Noun, singular or mass",
-      "class": "noun-or-singular-or-mass"
+      "class": "noun-or-singular-or-mass",
+      type: 'noun-type',
+      importance: 1
     },
     'NNS': {
       description: "Noun, plural",
-      "class": "noun-orplural"
+      "class": "noun-or-plural",
+      type: 'noun-type',
+      importance: 3
     },
     'NNP': {
       description: "Proper noun, singular",
-      "class": "proper-noun-or-singular"
+      "class": "proper-noun-or-singular",
+      type: 'noun-type',
+      importance: 0
     },
     'NNPS': {
       description: "Proper noun, plural",
-      "class": "proper-noun-or-plural"
+      "class": "proper-noun-or-plural",
+      type: 'noun-type',
+      importance: 0
     },
     'PDT': {
       description: "Predeterminer",
-      "class": "predeterminer"
+      "class": "predeterminer",
+      type: 'noun-type'
     },
     'POS': {
       description: "Possessive ending",
-      "class": "possessive-ending"
+      "class": "possessive-ending",
+      type: 'noun-type'
     },
     'PRP': {
       description: "Personal pronoun",
-      "class": "personal-pronoun"
+      "class": "personal-pronoun",
+      type: 'noun-type',
+      importance: 3
     },
     'PRP$': {
       description: "Possessive pronoun",
-      "class": 'possessive-pronoun'
+      "class": 'possessive-pronoun',
+      type: 'noun-type',
+      importance: 3
     },
     'RB': {
       description: "Adverb",
-      "class": "adverb"
+      "class": "adverb",
+      type: 'adverb-type'
     },
     'RBR': {
       description: "Adverb, comparative",
-      "class": "adverb-or-comparative"
+      "class": "adverb-or-comparative",
+      type: 'adverb-type'
     },
     'RBS': {
       description: "Adverb, superlative",
-      "class": "adverb-or-superlative"
+      "class": "adverb-or-superlative",
+      type: 'adverb-type'
     },
     'RP': {
       description: "Particle",
-      "class": "particle"
+      "class": "particle",
+      like_previous: true
     },
     'SYM': {
       description: "Symbol",
@@ -110,27 +133,35 @@
     },
     'VB': {
       description: "Verb, base form",
-      "class": "verb-or-base-form"
+      "class": "verb-or-base-form",
+      type: 'verb-type'
     },
     'VBD': {
       description: "Verb, past tense",
-      "class": "verb-or-past-tense"
+      "class": "verb-or-past-tense",
+      type: 'verb-type'
     },
     'VBG': {
       description: "Verb, gerund or present participle",
-      "class": "verb-or-gerund-or-present-participle"
+      "class": "verb-or-gerund-or-present-participle",
+      type: 'verb-type',
+      importance: 2
     },
     'VBN': {
       description: "Verb, past participle",
-      "class": "verb-or-past-participle"
+      "class": "verb-or-past-participle",
+      type: 'verb-type'
     },
     'VBP': {
       description: "Verb, non-3rd person singular present",
-      "class": "verb-or-non-3rd-person-singular-present"
+      "class": "verb-or-non-3rd-person-singular-present",
+      type: 'verb-type'
     },
     'VBZ': {
       description: "Verb, 3rd person singular present",
-      "class": "verb-or-3rd-person-singular-present"
+      "class": "verb-or-3rd-person-singular-present",
+      type: 'verb-type',
+      importance: 5
     },
     'WDT': {
       description: "Wh-determiner",
@@ -138,7 +169,9 @@
     },
     'WP': {
       description: "Wh-pronoun",
-      "class": "wh-pronoun"
+      "class": "wh-pronoun",
+      type: 'noun-type',
+      importance: 4
     },
     'WP$': {
       description: "Possessive wh-pronoun",
@@ -255,14 +288,23 @@
 
   Word = (function() {
     function Word(word) {
-      var _ref;
+      var tag;
       this.text = word[0], this.pos = word[1];
-      this["class"] = (_ref = pos_tags[this.pos]) != null ? _ref["class"] : void 0;
+      tag = pos_tags[this.pos];
+      this["class"] = tag != null ? tag["class"] : void 0;
+      this.title = tag != null ? tag.description : void 0;
+      if (tag != null ? tag.type : void 0) {
+        this["class"] += " " + tag.type;
+      }
+      if ((tag != null ? tag.importance : void 0) != null) {
+        this["class"] += " importance-" + tag.importance;
+      }
     }
 
     Word.prototype.print = function() {
       return $('<span/>', {
-        "class": this["class"]
+        "class": this["class"],
+        title: this.title
       }).text(this.text);
     };
 

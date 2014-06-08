@@ -1,0 +1,26 @@
+body {
+  background: #ddd; }
+
+.noun-type {
+  color: #049cdb; }
+
+.verb-type {
+  color: #46a546; }
+
+.importance-0 {
+  font-weight: bold;
+  font-size: 1.25em; }
+
+.importance-1 {
+  font-weight: bold;
+  font-size: 1.2em; }
+
+.importance-2 {
+  font-weight: bold;
+  font-size: 1.15em; }
+
+.importance-3 {
+  font-size: 1.1em; }
+
+.importance-4 {
+  font-size: 1.05em; }
